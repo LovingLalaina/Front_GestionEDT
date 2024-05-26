@@ -2,7 +2,8 @@ import {
   UseMutationOptions,
   useMutation as useMutationCore,
 } from "@tanstack/react-query";
-import { API_URL , KEY_ECOLE } from "./constants";
+import axios from "axios";
+import { API_URL } from "./constants";
 
 type Method = "POST" | "PUT" | "DELETE" | "PATCH";
 
@@ -14,14 +15,26 @@ export const useMutation = <TParam, TResponse, TError = Error>(
     | undefined,
   headers?: Record<string, string>
 ) => {
-  const url = `${API_URL}${queryKey}`;
+
   return useMutationCore<TResponse, TError, TParam>({
     mutationFn: async (data?: TParam) => {
-      const res = await fetch(url, {
+      const getToken = async () => {
+        try {
+          const response = await axios.get('/api/get-token');
+
+          return response.data.access_token;
+        } catch (error) {
+          console.error('Error in getToken :', error);
+          throw error;
+        }
+      };
+      
+      const token = await getToken();
+      const res = await fetch(`${API_URL}${queryKey}`, {
         method,
         headers: {
           "Content-Type": "application/json",
-          "API-Key": KEY_ECOLE,
+          "Authorization": "Bearer " + token,
           ...headers,
         },
         body: JSON.stringify(data ?? {}),

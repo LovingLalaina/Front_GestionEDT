@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import { CONSUMER_KEY , CONSUMER_SECRET , TOKEN_ENDPOINT } from "../../src/utils/constants";
+import { CONSUMER_KEY_EDT , CONSUMER_SECRET_EDT , TOKEN_ENDPOINT } from "../../src/utils/constants";
 
 export default async function handler(req, res) {
   try {
@@ -8,8 +8,8 @@ export default async function handler(req, res) {
       TOKEN_ENDPOINT,
       new URLSearchParams({
         grant_type: 'client_credentials',
-        client_id: CONSUMER_KEY,
-        client_secret: CONSUMER_SECRET,
+        client_id: CONSUMER_KEY_EDT,
+        client_secret: CONSUMER_SECRET_EDT,
       }).toString(),
       {
         headers: {

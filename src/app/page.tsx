@@ -1,6 +1,8 @@
 "use client";
 import { useGetGenerate } from "@/hooks/api/generateEdt/useGetGen";
+import { API_URL_EDT } from "@/utils/constants";
 import { Card, Typography } from "@material-tailwind/react";
+
 import axios from "axios";
 
 const TABLE_HEAD = ["Heure", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
@@ -32,7 +34,25 @@ export default function Home() {
   const { data: generateEdt } = useGetGenerate();
 
   const handleGenerate = async () => {
-    return await axios.post("http://localhost:5000/api/generate");
+    const getTokenEDT = async () => {
+      try {
+        
+        const response = await axios.get('/api/get-token-edt');
+        return response.data.access_token;
+      } catch (error) {
+        console.error('Error in getTokenEdt :', error);
+        throw error;
+      }
+    };
+
+    const token = await getTokenEDT();
+
+    return await axios.post(`${API_URL_EDT}/generate`, {}, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    });
   };
 
   console.log(generateEdt);

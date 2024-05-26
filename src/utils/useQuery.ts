@@ -3,7 +3,7 @@ import {
   useQuery as useQueryCore,
 } from "@tanstack/react-query";
 import axios from "axios";
-import { API_URL , CONSUMER_KEY , CONSUMER_SECRET , TOKEN_ENDPOINT } from "./constants";
+import { API_URL } from "./constants";
 
 export const useQuery = <T>(
   queryKey: string[],
@@ -17,7 +17,7 @@ export const useQuery = <T>(
       })
     | undefined
 ) => {
-  console.log( "Get Access");
+  
   return useQueryCore<T, unknown, T, string[]>({
     queryKey,
     queryFn: async () => {
@@ -37,7 +37,7 @@ export const useQuery = <T>(
       const res = await axios.get(`${API_URL}${queryFnKey}`, {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": 'Bearer ${token}'
+          "Authorization": "Bearer " + token
         },
       });
       return await res.data;
