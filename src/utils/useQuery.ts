@@ -17,11 +17,7 @@ export const useQuery = <T>(
       })
     | undefined
 ) => {
-
-  
-  
-    
-
+  console.log( "Get Access");
   return useQueryCore<T, unknown, T, string[]>({
     queryKey,
     queryFn: async () => {
