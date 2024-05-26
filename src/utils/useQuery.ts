@@ -36,16 +36,6 @@ export const useQuery = <T>(
           throw error;
         }
       };
-
-      /*const getTheToken = async () => {
-        try {
-          const token = await getToken();
-          console.log("cool le tok est : " + token);
-          // Utilisez le token ici comme nécessaire, par exemple pour une autre requête API
-        } catch (error) {
-          console.error('Erreur lors de l\'obtention du token :', error);
-        }
-      };*/
       
       const token = await getToken();
       const res = await axios.get(`${API_URL}${queryFnKey}`, {
