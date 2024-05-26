@@ -1,6 +1,6 @@
-import { useQuery } from "@/utils/useQuery";
+import { useQueryEDT } from "@/utils/useQueryEDT";
 import { edt } from "./type";
 
 export function useGetEdt() {
-  return useQuery<edt[]>(["edt"], "/edt");
+  return useQueryEDT<edt[]>(["edt"], "/edt");
 }

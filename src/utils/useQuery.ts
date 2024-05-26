@@ -3,7 +3,7 @@ import {
   useQuery as useQueryCore,
 } from "@tanstack/react-query";
 import axios from "axios";
-import { API_URL } from "./constants";
+import { API_URL , CONSUMER_KEY , CONSUMER_SECRET , TOKEN_ENDPOINT } from "./constants";
 
 export const useQuery = <T>(
   queryKey: string[],
@@ -17,12 +17,41 @@ export const useQuery = <T>(
       })
     | undefined
 ) => {
+
+  
+  
+    
+
   return useQueryCore<T, unknown, T, string[]>({
     queryKey,
     queryFn: async () => {
+
+      const getToken = async () => {
+        try {
+          const response = await axios.get('/api/get-token');
+
+          return response.data.access_token;
+        } catch (error) {
+          console.error('Error in getToken :', error);
+          throw error;
+        }
+      };
+
+      /*const getTheToken = async () => {
+        try {
+          const token = await getToken();
+          console.log("cool le tok est : " + token);
+          // Utilisez le token ici comme nécessaire, par exemple pour une autre requête API
+        } catch (error) {
+          console.error('Erreur lors de l\'obtention du token :', error);
+        }
+      };*/
+      
+      const token = await getToken();
       const res = await axios.get(`${API_URL}${queryFnKey}`, {
         headers: {
           "Content-Type": "application/json",
+          "Authorization": 'Bearer ${token}'
         },
       });
       return await res.data;

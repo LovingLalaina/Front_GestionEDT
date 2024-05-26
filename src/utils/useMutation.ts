@@ -2,7 +2,7 @@ import {
   UseMutationOptions,
   useMutation as useMutationCore,
 } from "@tanstack/react-query";
-import { API_URL } from "./constants";
+import { API_URL , KEY_ECOLE } from "./constants";
 
 type Method = "POST" | "PUT" | "DELETE" | "PATCH";
 
@@ -21,6 +21,7 @@ export const useMutation = <TParam, TResponse, TError = Error>(
         method,
         headers: {
           "Content-Type": "application/json",
+          "API-Key": KEY_ECOLE,
           ...headers,
         },
         body: JSON.stringify(data ?? {}),
