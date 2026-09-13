@@ -20,7 +20,7 @@
     "dotenv": "^16.4.5",
     "heroicons": "^2.0.18",
     "http-proxy-middleware": "^3.0.0",
-    "next": "^14.2.3",
+    "next": "^15.5.24",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.49.2",
